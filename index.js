@@ -5,8 +5,10 @@ var cors = require('cors')
 const port = 3000
 
 app.use(cors())
+
 app.get('/', (req, res) => {
-  res.send(Product)
+  res.send(Product,console.log(Product)
+  )
 })
 
 app.listen(port, () => {
