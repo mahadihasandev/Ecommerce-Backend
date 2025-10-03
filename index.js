@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose');
 var cors = require('cors')
+var userSchema=require('./models/userSchema')
+
+
 const port = 3000
 
 app.use(cors())
@@ -17,7 +20,7 @@ let users=[
 ]
 
 app.get('/', (req, res) => {
-  res.send(users)
+  let allData=userSchema.find({})
   
 })
 
@@ -32,14 +35,17 @@ app.post("/users",(req,res)=>{
     res.send("enter a last name")
   }else if(!password){
     res.send("enter a last name")
-  }
-  res.send(req.body)
-  
-// arnob
-// 55iZ0QRE4A4oVGPW
-// mongodb+srv://arnob:<db_password>@cluster0.602dp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+  }else{
+    data=new userSchema({
+      firstName:firstName,
+      lastName:lastName,
+      email:email,
+      password:password,
 
-  users.push(req.body)
+    })
+    data.save()
+  }
+  
 })
 
 app.listen(port, () => {

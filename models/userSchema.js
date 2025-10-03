@@ -4,7 +4,15 @@ const { Schema } = mongoose;
 
 const userSchema=new Schema({
     firstName:String,
-    lastName:String
+    lastName:String,
+    email:{
+        type:String,
+        require:true
+    },
+    password:{
+        type:String,
+        require:true
+    }
 })
 
-model.export=mongoose.model(modelName, Schema)
+module.exports=mongoose.model("userinfo", userSchema)
