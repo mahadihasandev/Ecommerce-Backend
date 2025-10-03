@@ -19,9 +19,9 @@ let users=[
   {firstName:"Rased",lastName:"rofic",email:"rasedl@gmail.com",password:"3456789"},
 ]
 
-app.get('/', (req, res) => {
-  let allData=userSchema.find({})
-  
+app.get('/', async (req, res) => {
+  let allData=await userSchema.find({})
+  res.send(allData)
 })
 
 app.post("/users",(req,res)=>{
