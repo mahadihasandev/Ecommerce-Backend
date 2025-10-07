@@ -3,7 +3,7 @@ const app = express()
 const mongoose = require('mongoose');
 var cors = require('cors')
 var userSchema=require('./models/userSchema')
-
+const bcrypt = require('bcrypt');
 
 const port = 3000
 
@@ -36,16 +36,20 @@ app.post("/users",(req,res)=>{
   }else if(!password){
     res.send("enter a last name")
   }else{
+
+
+    bcrypt.hash(password, 10, function(err, hash) {
+   
     data=new userSchema({
       firstName:firstName,
       lastName:lastName,
       email:email,
-      password:password,
+      password:hash,
 
     })
     data.save()
-  }
-  
+}) 
+}
 })
 
 app.listen(port, () => {
