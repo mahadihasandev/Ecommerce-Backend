@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 var cors = require('cors')
 var userSchema=require('./models/userSchema')
 const bcrypt = require('bcrypt');
+const emailVerification = require('./helpers/emailVerification');
 
 const port = 3000
 
@@ -48,7 +49,9 @@ app.post("/users",(req,res)=>{
 
     })
     data.save()
-}) 
+    emailVerification(email) 
+})
+
 }
 })
 
