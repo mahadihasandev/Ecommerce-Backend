@@ -5,6 +5,8 @@ var cors = require('cors')
 var userSchema=require('./models/userSchema')
 const bcrypt = require('bcrypt');
 const emailVerification = require('./helpers/emailVerification');
+const checker=require('./middlewares/checker')
+var jwt = require('jsonwebtoken');
 
 const port = 3000
 
@@ -20,7 +22,9 @@ let users=[
   {firstName:"Rased",lastName:"rofic",email:"rasedl@gmail.com",password:"3456789"},
 ]
 
-app.get('/', async (req, res) => {
+
+
+app.get('/',checker , async (req, res) => {
   let allData=await userSchema.find({})
   res.send(allData)
 })
@@ -37,7 +41,7 @@ app.post("/users",(req,res)=>{
   }else if(!password){
     res.send("enter a last name")
   }else{
-
+    var token = jwt.sign({ email: email }, "arnob");
 
     bcrypt.hash(password, 10, function(err, hash) {
    
@@ -46,12 +50,12 @@ app.post("/users",(req,res)=>{
       lastName:lastName,
       email:email,
       password:hash,
+      token:token,
 
     })
     data.save()
-    emailVerification(email) 
+    emailVerification(email ) 
 })
-
 }
 })
 
